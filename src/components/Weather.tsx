@@ -1,11 +1,9 @@
-import { WeatherData } from "../utils/constant"
+import { useAppSelector } from "../app/hooks"
 
-interface Props {
-  weather: WeatherData,
-  message: string
-}
+function Weather() {
+  const message = useAppSelector(state => state.message);
+  const weather = useAppSelector(state => state.weatherInfo);
 
-function Weather({weather, message}: Props) {
   if (message) {
     return (
       <div>{message}</div>
@@ -13,14 +11,14 @@ function Weather({weather, message}: Props) {
   } else {
     return (
       <div className='infoWeath'>{
-          !message && <>
-            <p>Location: {weather.country}, {weather.city}</p>
-            <p>Temp: {weather.temp}</p>
-            <p>Pressure: {weather.pressure}</p>
-            <p>Sunset: {new Date((weather.sunset ?? 0) * 1000).toLocaleTimeString()}</p>
-          </>
+        !message && <>
+          <p>Location: {weather.country}, {weather.city}</p>
+          <p>Temp: {weather.temp}</p>
+          <p>Pressure: {weather.pressure}</p>
+          <p>Sunset: {new Date((weather.sunset ?? 0) * 1000).toLocaleTimeString()}</p>
+        </>
       }
-          <>{message}</>
+        <>{message}</>
       </div>
     )
   }
