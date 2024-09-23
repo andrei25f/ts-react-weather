@@ -1,7 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { useAppDispatch } from '../app/hooks';
-import { fetchWeatherByCity } from '../features/slices/weatherSlice';
-import { putMessage } from '../features/slices/messageSlice';
+import { fetchWeather } from '../features/api/weatherApi';
 
 function Form() {
     const [city, setCity] = useState('');
@@ -9,14 +8,7 @@ function Form() {
 
     const getCity = async (e: FormEvent) => {
         e.preventDefault();
-        await dispatch(fetchWeatherByCity(city))
-            .unwrap()
-            .then(() => {
-                dispatch(putMessage(''));
-            })
-            .catch(() => {
-                dispatch(putMessage('Enter correct city name'))
-            });
+        await dispatch(fetchWeather(city));
         setCity('');
     }
 
